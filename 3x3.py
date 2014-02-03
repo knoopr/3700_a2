@@ -85,12 +85,12 @@ class PUZZLE( SearchProblem ):
     def is_target(self):
         return self.state[1][0] == [1,2,3] and self.state[1][1] == [4,5,6] and self.state[1][2] == [7,8,' ']
 
-    def In_place(self, input_Array):
+    def In_place(self):
         proper_Place = []
         target_State =[[1,2,3],[4,5,6],[7,8,' ']]
        
         for k in range(3):
-            proper_Place.extend([i for i, j in zip(target_State[k], input_Array[k]) if i == j])
+            proper_Place.extend([i for i, j in zip(target_State[k], self.state[1][k]) if i == j])
         return len(proper_Place)
 
     def Places_to(self):
@@ -134,15 +134,24 @@ if __name__ == "__main__":
                 num_Array[i%3].append(' ')
                 already_Placed.append(' ')
                 i += 1
-        print str(num_Array) + "\nDepth first search results:"
+        print str(num_Array) + "\nPieces out of place results:"
         a = datetime.datetime.now()
-        #PUZZLE(state=(0, [[4,1,6],[3,2,5],[8,7,' ']], []), states_Visited=[0]).dfs()
+        try:
+            PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h1_Search()
+        except KeyboardInterrupt:
+            exit()
+        except:
+            print "No solutions were found before the maximum recursion was reached"
         b = datetime.datetime.now()
         print "Time taken: " + str(b-a)
         a = datetime.datetime.now()
-        print str(num_Array) + "\nManhattan distance results:"
-        PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h2_Search()
+        print "\nManhattan distance results:"
+        try:
+            PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h2_Search()
+        except KeyboardInterrupt:
+            exit()
+        except:
+            print "No solutions were found before the maximum recursion was reached"
         b = datetime.datetime.now()
         print "Time taken: " + str(b-a)
         print "\n\n"
-        break
