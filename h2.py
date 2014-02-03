@@ -141,7 +141,7 @@ if __name__ == "__main__":
         print "Time taken: " + str(b-a)
         a = datetime.datetime.now()
         print str(num_Array) + "\nManhattan distance results:"
-        PUZZLE(state=(0, [[6,5,1],[3,4,2],[8,7,' ']], []), states_Visited=[0]).h2_Search()
+        PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h2_Search()
         b = datetime.datetime.now()
         print "Time taken: " + str(b-a)
         print "\n\n"
