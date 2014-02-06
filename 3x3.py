@@ -85,13 +85,13 @@ class PUZZLE( SearchProblem ):
     def is_target(self):
         return self.state[1][0] == [1,2,3] and self.state[1][1] == [4,5,6] and self.state[1][2] == [7,8,' ']
 
-    def In_place(self):
-        proper_Place = []
+    def Wrong_place(self):
+        improper_Place = []
         target_State =[[1,2,3],[4,5,6],[7,8,' ']]
        
         for k in range(3):
-            proper_Place.extend([i for i, j in zip(target_State[k], self.state[1][k]) if i == j])
-        return len(proper_Place)
+            improper_Place.extend([i for i, j in zip(target_State[k], self.state[1][k]) if i != j])
+        return len(improper_Place)
 
     def Places_to(self):
         i = 0
@@ -131,14 +131,12 @@ class PUZZLE( SearchProblem ):
                     if inversion_Array[i] != ' ' and (number - inversion_Array[i]) > 0:
                         inversion_Sum += 1
         
-        
-        if len(self.state[1])%2 == 1:
-            if inversion_Sum%2 == 0:
-                return True
-            else:
-                return False
+        if inversion_Sum%2 == 0:
+            return True
         else:
-            print "bad"
+            return False
+
+
 
 
 if __name__ == "__main__":
@@ -161,20 +159,20 @@ if __name__ == "__main__":
                 already_Placed.append(' ')
                 i += 1
         if PUZZLE(state=(0, num_Array, []), states_Visited=[0]).Is_solvable():
-            print str(num_Array) + "\nPieces out of place results:"
             a = datetime.datetime.now()
+            print str(num_Array) + "\nManhattan distance results:"
             try:
-                PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h1_Search()
+                PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h2_Search()
             except KeyboardInterrupt:
                 exit()
             except:
                 print "No solutions were found before the maximum recursion was reached"
             b = datetime.datetime.now()
             print "Time taken: " + str(b-a)
+            print "\nPieces out of place results:"
             a = datetime.datetime.now()
-            print "\nManhattan distance results:"
             try:
-                PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h2_Search()
+                PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h1_Search()
             except KeyboardInterrupt:
                 exit()
             except:

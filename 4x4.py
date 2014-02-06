@@ -85,13 +85,13 @@ class PUZZLE( SearchProblem ):
     def is_target(self):
         return self.state[1][0] == [1,2,3,4] and self.state[1][1] == [5,6,7,8] and self.state[1][2] == [9,10,11,12] and self.state[1][3] == [13,14,15,' ']
 
-    def In_place(self):
-        proper_Place = []
+    def Wrong_place(self):
+        improper_Place = []
         target_State =[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,' ']]
        
         for k in range(4):
-            proper_Place.extend([i for i, j in zip(target_State[k], self.state[1][k]) if i == j])
-        return len(proper_Place)
+            improper_Place.extend([i for i, j in zip(target_State[k], self.state[1][k]) if i != j])
+        return len(improper_Place)
 
     def Places_to(self):
         i = 0
@@ -115,8 +115,37 @@ class PUZZLE( SearchProblem ):
             i += 1
         return sum
 
+    def Is_solvable(self):
+        inversion_Array = []
+        inversion_Sum = 0
+        
+        #laying out the inversion array
+        for mini_Array in self.state[1]:
+            inversion_Array+= mini_Array
+
+        
+        #Caluclating the inversion sum to determine solvability
+        for index,number in enumerate(inversion_Array):
+            if number != ' ':
+                for i in xrange(index+1,len(inversion_Array),1):
+                    if inversion_Array[i] != ' ' and (number - inversion_Array[i]) > 0:
+                        inversion_Sum += 1
+        
+        for index, mini_Array in enumerate(self.state[1]):
+            if ' ' in mini_Array:
+                if index%2 == 0 and inversion_Sum%2 == 1:
+                    return True
+                if index%2 == 1 and inversion_Sum%2 == 0:
+                    return True
+                else:
+                    return False
+
+
+
+
+
 if __name__ == "__main__":
-    sys.setrecursionlimit(100000)
+    sys.setrecursionlimit(10000)
 
     for j in range(50):
         i = 0
@@ -134,27 +163,27 @@ if __name__ == "__main__":
                 num_Array[i%4].append(' ')
                 already_Placed.append(' ')
                 i += 1
-        print str(num_Array) + "\nPieces out of place results:"
-        a = datetime.datetime.now()
-        try:
-            PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h1_Search()
-        except KeyboardInterrupt:
-            exit()
-        except:
-            print "No solutions were found before the maximum recursion was reached"
-        b = datetime.datetime.now()
-        print "Time taken: " + str(b-a)
-        """
-        a = datetime.datetime.now()
-        print "\nManhattan distance results:"
-        try:
-            PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h2_Search()
-        except KeyboardInterrupt:
-            exit()
-        except:
-            print "No solutions were found before the maximum recursion was reached"
-        b = datetime.datetime.now()
-        print "Time taken: " + str(b-a)
-        print "\n\n"
-            """
-        break
+        if PUZZLE(state=(0, num_Array, []), states_Visited=[0]).Is_solvable():
+            a = datetime.datetime.now()
+            print str(num_Array) + "\nManhattan distance results:"
+            try:
+                PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h2_Search()
+            except KeyboardInterrupt:
+                exit()
+            except:
+                print "No solutions were found before the maximum recursion was reached"
+            b = datetime.datetime.now()
+            print "Time taken: " + str(b-a)
+            print "\nPieces out of place results:"
+            a = datetime.datetime.now()
+            try:
+                PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h1_Search()
+            except KeyboardInterrupt:
+                exit()
+            except:
+                print "No solutions were found before the maximum recursion was reached"
+            b = datetime.datetime.now()
+            print "Time taken: " + str(b-a)
+            print "\n\n"
+        else:
+            j -= 1
