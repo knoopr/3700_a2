@@ -135,7 +135,8 @@ if __name__ == "__main__":
     seed()
     new_Maze = Maze().Make_maze()
     print "The maze to be solved is:"
-
+    for i in new_Maze:
+        print i
     print "\nSolving the maze using the manhattan distance results in the following:"
     a = datetime.datetime.now()
     Maze(preselected_Maze=new_Maze).h2_Search()
