@@ -160,7 +160,8 @@ if __name__ == "__main__":
                 i += 1
         if PUZZLE(state=(0, num_Array, []), states_Visited=[0]).Is_solvable():
             a = datetime.datetime.now()
-            print str(num_Array) + "\nManhattan distance results:"
+            print "The Puzzle to be solved is:\t" + str(num_Array)
+            print "Manhattan distance results:"
             try:
                 PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h2_Search()
             except KeyboardInterrupt:

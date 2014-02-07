@@ -165,25 +165,26 @@ if __name__ == "__main__":
                 i += 1
         if PUZZLE(state=(0, num_Array, []), states_Visited=[0]).Is_solvable():
             a = datetime.datetime.now()
-            print str(num_Array) + "\nManhattan distance results:"
-            try:
-                PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h2_Search()
-            except KeyboardInterrupt:
-                exit()
-            except:
-                print "No solutions were found before the maximum recursion was reached"
-            b = datetime.datetime.now()
-            print "Time taken: " + str(b-a)
-            print "\nPieces out of place results:"
-            a = datetime.datetime.now()
-            try:
-                PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h1_Search()
-            except KeyboardInterrupt:
-                exit()
-            except:
-                print "No solutions were found before the maximum recursion was reached"
-            b = datetime.datetime.now()
-            print "Time taken: " + str(b-a)
-            print "\n\n"
+                print "The Puzzle to be solved is:\t" + str(num_Array)
+                print "Manhattan distance results:"
+                try:
+                    PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h2_Search()
+                except KeyboardInterrupt:
+                    exit()
+                except:
+                    print "No solutions were found before the maximum recursion was reached"
+                b = datetime.datetime.now()
+                print "Time taken: " + str(b-a)
+                print "\nPieces out of place results:"
+                a = datetime.datetime.now()
+                try:
+                    PUZZLE(state=(0, num_Array, []), states_Visited=[0]).h1_Search()
+                except KeyboardInterrupt:
+                    exit()
+                except:
+                    print "No solutions were found before the maximum recursion was reached"
+                b = datetime.datetime.now()
+                print "Time taken: " + str(b-a)
+                print "\n\n"
         else:
             j -= 1
